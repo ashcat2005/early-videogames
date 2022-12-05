@@ -1,7 +1,4 @@
 # Pong!
-
-Python implementation of the Pong! videogame.
-
      ______________________________________
     |   ___  ___  ___  ___  ___  _____     |
     |  | . || __|| | ||  _|| . ||_   _|    |
@@ -12,6 +9,10 @@ Python implementation of the Pong! videogame.
 PONG!
 by Edward Larrañaga - 2022
 
+
+Python implementation of the Pong! videogame.
+
+---
 Sounds acknowledgement:
 
 Open Treasure Chest 8 Bit.wav
@@ -30,5 +31,4 @@ Game Over
 wolderado. 
 https://freesound.org/people/wolderado/sounds/415096/
 
-###############################################################################
-'''
+---
