@@ -68,7 +68,7 @@ class Ball(Block):
         self.delta_x = self.speed*random.choice((-1,1))
         self.delta_y = self.speed*random.choice((-1,1))
         self.player_group = player_group
-        self.player_group = blocks_group
+        self.blocks_group = blocks_group
     
     def collisions(self):
         if self.rect.top<=0 or self.rect.bottom >= SCREEN_HEIGHT:
@@ -92,6 +92,10 @@ class Ball(Block):
             if abs(self.rect.bottom - paddle_col.rect.top) < 10 and self.delta_y > 0:
                 self.rect.bottom = paddle_col.rect.top
                 self.delta_y *=-1
+        
+        if pygame.sprite.spritecollide(self, self.blocks_group, True):
+            pygame.mixer.Sound.play(explosion_sound)
+            self.delta_y *=-1
 
     def update(self):
         self.collisions()
@@ -148,7 +152,6 @@ class GameScene():
         # Update
         self.player_group.update()
         self.ball_group.update()
-        pygame.sprite.spritecollide(self.ball_group.sprite, self.blocks_group, True)
         screen.blit(background, [0,0])
         self.player_group.draw(screen)
         self.ball_group.draw(screen)
@@ -178,6 +181,7 @@ light_grey = (200,200,200)
 
 # Sounds
 pong_sound = pygame.mixer.Sound('sounds/pong.mp3')
+explosion_sound = pygame.mixer.Sound('sounds/pong.mp3')
 
 
 
@@ -197,8 +201,18 @@ ball_group.add(ball)
 player1 = Player(120,10,SCREEN_WIDTH//2 , SCREEN_HEIGHT - 50, light_grey, 7)
 player_group.add(player1)
 
-block = Block(80, 10, 60 , 50, pygame.Color('green'))
-blocks_group.add(block)
+px = 39
+for i in range(16):
+    blockr1 = Block(40, 10, px , 50, pygame.Color('red'))
+    blockr2 = Block(40, 10, px , 75, pygame.Color('red'))
+    blocko1 = Block(40, 10, px , 100, pygame.Color('orange'))
+    blocko2 = Block(40, 10, px , 125, pygame.Color('orange'))
+    blockg1 = Block(40, 10, px , 150, pygame.Color('green'))
+    blockg2 = Block(40, 10, px , 175, pygame.Color('green'))
+    blocky1 = Block(40, 10, px , 200, pygame.Color('yellow'))
+    blocky2 = Block(40, 10, px , 225, pygame.Color('yellow'))
+    blocks_group.add(blockr1, blockr2, blocko1, blocko2, blockg1, blockg2, blocky1, blocky2)
+    px += 59
 
 
 # Game scenes
