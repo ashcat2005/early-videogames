@@ -14,12 +14,24 @@ by Edward Larrañaga - 2022
 
 Sounds acknowledgement:
 
+Open Treasure Chest 8 Bit.wav
+Mrthenoronha. 
+https://freesound.org/people/Mrthenoronha/sounds/519630/
 
+Old Video Game 5
+Enes DENİZ (sonically_sound). 
+https://freesound.org/people/sonically_sound/sounds/624882/
+
+Menu Select
+pumodi. 
+https://freesound.org/people/pumodi/sounds/150222/
+
+Game Over
+wolderado. 
+https://freesound.org/people/wolderado/sounds/415096/
 
 ###############################################################################
 '''
-
-
 
 
 import pygame, sys, random
@@ -117,6 +129,7 @@ class Game_play():
     Controls the game.
     '''
     def __init__(self, player_group, ball_group, blocks_group, play=False):
+        self.level = 1
         self.lifes = 2
         self.player1_score = 0
         self.player_group = player_group
@@ -177,14 +190,15 @@ class Game_play():
             self.play = False
     
     def next_level(self):
-        build_blocks()
+        self.level += 1
+        build_level(level=self.level)
         self.restart_timer = pygame.time.get_ticks()
         self.lifes += 1
         pygame.mixer.Sound.play(start_sound)
         self.reset()
 
     def new_game(self):
-        build_blocks()
+        build_level(level=self.level)
         self.restart_timer = pygame.time.get_ticks()
         self.player1_score = 0
         self.lifes = 2
@@ -251,9 +265,15 @@ class IntroScene():
 
 ###############################################################################
 
-def build_blocks():
+def build_level(level=1):
     N = 16
-    colors = ['red', 'red', 'orange', 'orange', 'green', 'green', 'yellow', 'yellow']
+    if level ==1:
+        colors = ['red', 'red', 'orange', 'orange', 'green', 'green', 'yellow', 'yellow']
+    elif level ==2:
+        colors = ['red', 'red', 'orange', 'orange', 'green', 'green', 'yellow', 'yellow', 'white', 'white']
+    else:
+        colors = ['red', 'red', 'orange', 'orange', 'green', 'green', 'yellow', 'yellow', 'white', 'white', 'blue', 'blue']
+    
     px = 39
 
     for i in range(N):
@@ -305,7 +325,7 @@ blocks_group = pygame.sprite.Group()
 ball = Ball(20,20,SCREEN_WIDTH//2,SCREEN_HEIGHT//2, light_grey, 6, player_group, blocks_group)
 ball_group.add(ball)
 
-player1 = Player(120,10,SCREEN_WIDTH//2 , SCREEN_HEIGHT - 50, light_grey, speed=8)
+player1 = Player(120, 10,SCREEN_WIDTH//2 , SCREEN_HEIGHT - 50, light_grey, speed=8)
 player_group.add(player1)
 
 
